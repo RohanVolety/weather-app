@@ -1,0 +1,28 @@
+inputSet:
+  identifier: "changes"
+  name: "changes"
+  orgIdentifier: "default"
+  projectIdentifier: "Flaskpipeline"
+  pipeline:
+    identifier: "FLASKCICD"
+    stages:
+    - stage:
+        identifier: "k8deploy"
+        type: "Deployment"
+        spec:
+          serviceConfig:
+            serviceDefinition:
+              type: "Kubernetes"
+              spec:
+                artifacts:
+                  primary:
+                    type: "DockerRegistry"
+                    spec:
+                      tag: "latest"
+    properties:
+      ci:
+        codebase:
+          build:
+            type: "branch"
+            spec:
+              branch: "<+trigger.branch>"
