@@ -1,10 +1,10 @@
 #import the flask module
 from flask import Flask, render_template, request
-import requests
+
 
 app = Flask(__name__)
 
-#make a route and render all the html templates in this route
+
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -18,8 +18,7 @@ def index():
         #read the json object
         json_object = r.json()
 
-        #take some attributes like temperature,humidity,pressure of this
-        # this temparetuure in kelvin
+ 
         temperature = int(json_object['main']['temp']-273.15)
         humidity = int(json_object['main']['humidity'])
         pressure = int(json_object['main']['pressure'])
