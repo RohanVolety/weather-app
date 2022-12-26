@@ -170,8 +170,3 @@ pipeline:
                 - AllErrors
               action:
                 type: StageRollback
-  properties:
-    ci:
-      codebase:
-        connectorRef: pythonsampleconnector
-        build: <+input>
