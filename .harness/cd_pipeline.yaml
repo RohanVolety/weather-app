@@ -25,7 +25,7 @@ pipeline:
                   identifier: code_compile
                   spec:
                     connectorRef: docker_quickstart
-                    image: python:3.10.6-alpine
+                    image: python:3.9.0-alpine3.12
                     shell: Sh
                     command: python -m compileall ./
               - step:
@@ -39,9 +39,9 @@ pipeline:
                     command: |-
                       touch pythondockerfile
                       cat > pythondockerfile <<- EOM
-                      FROM python:3.10.6-alpine
-                      WORKDIR /flask-pipeline
-                      ADD . /flask-pipeline
+                      FROM python:3.9.7-alpine
+                      WORKDIR /weather-app
+                      ADD . /weather-app
                       RUN pip install -r requirements.txt
                       CMD ["python" , "app.py"]
                       EOM
@@ -52,7 +52,7 @@ pipeline:
                   identifier: BuildandPushanimagetoDockerRegistry
                   spec:
                     connectorRef: docker_quickstart
-                    repo: rohan010/flaskapp
+                    repo: rohan010/weather-app
                     tags:
                       - latest
                     dockerfile: pythondockerfile
@@ -71,7 +71,7 @@ pipeline:
                   identifier: python_server
                   spec:
                     connectorRef: docker_quickstart
-                    image: alpine
+                    image: tiangolo/uwsgi-nginx-flask:python3.9
                     shell: Sh
                     command: python app.py
                   description: server connection
@@ -134,7 +134,7 @@ pipeline:
                   primary:
                     spec:
                       connectorRef: docker_quickstart
-                      imagePath: rohan010/flaskapp
+                      imagePath: rohan010/weather-app
                       tag: <+input>
                     type: DockerRegistry
               type: Kubernetes
