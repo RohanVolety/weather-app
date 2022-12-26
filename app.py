@@ -1,10 +1,11 @@
 #import the flask module
+
 from flask import Flask, render_template, request
 
 
 app = Flask(__name__)
 
-
+#make a route and render all the html templates in this route
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -13,12 +14,15 @@ def index():
         city_name = request.form.get('city')
 
         #take a variable to show the json data
-        r = requests.get('https://api.openweathermap.org/data/2.5/weather?q='+city_name+'&APPID=e2e0ee15a4452505007688b2b8f43f71')
-
+       
+        json_object = {"coord": {"lon": 77.2167, "lat": 28.6667}, "weather": [{"id": 701, "main": "Mist", "description": "mist", "icon": "50d"}], "base": "stations", "main": {"temp": 285.2, "feels_like": 284.73, "temp_min": 285.2, "temp_max": 285.2, "pressure": 1018, "humidity": 87}, "visibility": 1200, "wind": {
+            "speed": 2.57, "deg": 270}, "clouds": {"all": 1}, "dt": 1672055440, "sys": {"type": 1, "id": 9165, "country": "IN", "sunrise": 1672018912, "sunset": 1672056059}, "timezone": 19800, "id": 1273294, "name": "Delhi", "cod": 200}
+       
         #read the json object
-        json_object = r.json()
+        #json_object = r.json()
 
- 
+        #take some attributes like temperature,humidity,pressure of this
+        # this temparetuure in kelvin
         temperature = int(json_object['main']['temp']-273.15)
         humidity = int(json_object['main']['humidity'])
         pressure = int(json_object['main']['pressure'])
